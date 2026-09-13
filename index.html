@@ -1,264 +1,178 @@
-
-        <!DOCTYPE html>
-        <html lang="ta">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Thalir - September 2026 Issue - Vaalu Pathippagam</title>
-            <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
-            <style>
-                body {
-                    background-color: #F4F1EA; 
-                    margin: 0;
-                    padding: 0;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    overflow: hidden;
-                    font-family: Arial, sans-serif;
-                    user-select: none; 
-                    -webkit-user-select: none;
-                }
-                
-                #password-overlay {
-                    display: flex;
-                    position: fixed;
-                    top: 0; left: 0; width: 100vw; height: 100vh;
-                    background: #F4F1EA;
-                    z-index: 9999;
-                    justify-content: center;
-                    align-items: center;
-                }
-                .pwd-box {
-                    background: white; padding: 30px; border-radius: 15px; text-align: center;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.6); max-width: 90%; width: 350px;
-                }
-                .pwd-box input {
-                    padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; outline: none; width: 200px;
-                }
-                .pwd-box button.eye-btn {
-                    padding: 9px 12px; cursor: pointer; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; background: #eee;
-                }
-                .pwd-box button.submit-btn {
-                    margin-top: 20px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%;
-                }
-
-                /* புத்தகத்தின் கன்டெய்னர் - நடுவில் கச்சிதமாக நிற்க */
-                #book-wrapper {
-                    width: 100vw;
-                    height: calc(100vh - 100px);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-top: 20px;
-                    transition: transform 0.3s ease;
-                }
-                
-                /* எந்த ரிப்ளெக்ஷனும் இல்லாமல், ஆனால் புத்தகத்தின் 3D நிழல் மட்டும் தெரியும் */
-                #book {
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                }
-                
-                .page {
-                    background-color: #fff;
-                    border: solid 1px #e3e3e3;
-                    overflow: hidden;
-                    position: relative;
-                }
-                
-                .page .bg-img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: fill; 
-                    display: block;
-                    pointer-events: none;
-                }
-                
-                .watermark-text {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%) rotate(-45deg);
-                    font-size: 35px;
-                    font-weight: bold;
-                    color: rgba(150, 150, 150, 0.3);
-                    pointer-events: none;
-                    z-index: 10;
-                    white-space: nowrap;
-                }
-                
-                .watermark-img {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    max-width: 50%;
-                    max-height: 50%;
-                    opacity: 0.2; 
-                    pointer-events: none;
-                    z-index: 10;
-                }
-
-                .controls {
-                    height: 50px;
-                    background: #333;
-                    padding: 5px 20px;
-                    border-radius: 30px;
-                    color: white;
-                    display: flex;
-                    gap: 15px;
-                    align-items: center;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-                    z-index: 100;
-                    margin-bottom: 20px;
-                }
-                .controls button {
-                    background: #FFD700; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; color: black;
-                }
-                .controls input {
-                    width: 50px; text-align: center; border-radius: 5px; border: none; padding: 3px;
-                }
-            </style>
-        </head>
-        <body oncontextmenu="return false;"> 
-            
-                       <audio id="flipSound" src="flip.mp3"></audio>
-            
-            <div id="book-wrapper">
-                <div class="flip-book" id="book">
-        <div class="page"><img src="page_1.jpg" class="bg-img" alt="பக்கம் 1"></div>
-<div class="page"><img src="page_2.jpg" class="bg-img" alt="பக்கம் 2"></div>
-<div class="page"><img src="page_3.jpg" class="bg-img" alt="பக்கம் 3"></div>
-<div class="page"><img src="page_4.jpg" class="bg-img" alt="பக்கம் 4"></div>
-<div class="page"><img src="page_5.jpg" class="bg-img" alt="பக்கம் 5"></div>
-<div class="page"><img src="page_6.jpg" class="bg-img" alt="பக்கம் 6"></div>
-<div class="page"><img src="page_7.jpg" class="bg-img" alt="பக்கம் 7"></div>
-<div class="page"><img src="page_8.jpg" class="bg-img" alt="பக்கம் 8"></div>
-<div class="page"><img src="page_9.jpg" class="bg-img" alt="பக்கம் 9"></div>
-<div class="page"><img src="page_10.jpg" class="bg-img" alt="பக்கம் 10"></div>
-<div class="page"><img src="page_11.jpg" class="bg-img" alt="பக்கம் 11"></div>
-<div class="page"><img src="page_12.jpg" class="bg-img" alt="பக்கம் 12"></div>
-<div class="page"><img src="page_13.jpg" class="bg-img" alt="பக்கம் 13"></div>
-<div class="page"><img src="page_14.jpg" class="bg-img" alt="பக்கம் 14"></div>
-<div class="page"><img src="page_15.jpg" class="bg-img" alt="பக்கம் 15"></div>
-<div class="page"><img src="page_16.jpg" class="bg-img" alt="பக்கம் 16"></div>
-<div class="page"><img src="page_17.jpg" class="bg-img" alt="பக்கம் 17"></div>
-<div class="page"><img src="page_18.jpg" class="bg-img" alt="பக்கம் 18"></div>
-<div class="page"><img src="page_19.jpg" class="bg-img" alt="பக்கம் 19"></div>
-<div class="page"><img src="page_20.jpg" class="bg-img" alt="பக்கம் 20"></div>
-<div class="page"><img src="page_21.jpg" class="bg-img" alt="பக்கம் 21"></div>
-<div class="page"><img src="page_22.jpg" class="bg-img" alt="பக்கம் 22"></div>
-<div class="page"><img src="page_23.jpg" class="bg-img" alt="பக்கம் 23"></div>
-<div class="page"><img src="page_24.jpg" class="bg-img" alt="பக்கம் 24"></div>
-
-                </div>
-            </div>
-
-            <div class="controls" id="controls">
-                <button id="btn-zoom-out">- ஜூம் குறை</button>
-                <button id="btn-zoom-in">+ ஜூம் ஏற்று</button>
-                <span>பக்கம்: <span id="current-page">1</span> / <span id="total-pages">24</span></span>
-                <input type="number" id="goto-input" min="1" max="24">
-                <button id="btn-goto">செல்</button>
-            </div>
-
-            <script>
-                window.onload = function() {
-                    const requiredPassword = "";
-                    const overlay = document.getElementById('password-overlay');
-
-                    if (requiredPassword) {
-                        const pwdInput = document.getElementById('book-pwd-input');
-                        const toggleBtn = document.getElementById('toggle-pwd-btn');
-                        const submitBtn = document.getElementById('submit-pwd-btn');
-                        const errorMsg = document.getElementById('pwd-error');
-
-                        toggleBtn.addEventListener('click', () => {
-                            if (pwdInput.type === 'password') {
-                                pwdInput.type = 'text';
-                                toggleBtn.innerText = '🙈';
-                            } else {
-                                pwdInput.type = 'password';
-                                toggleBtn.innerText = '👁';
-                            }
-                        });
-
-                        submitBtn.addEventListener('click', () => {
-                            if (pwdInput.value === requiredPassword) {
-                                overlay.style.display = 'none'; 
-                            } else {
-                                errorMsg.style.display = 'block';
-                            }
-                        });
-                        
-                        pwdInput.addEventListener('keypress', function (e) {
-                            if (e.key === 'Enter') submitBtn.click();
-                        });
-                    } else {
-                        overlay.style.display = 'none'; 
-                    }
-
-                    try {
-                        if (typeof St !== 'undefined') {
-                            const pageFlip = new St.PageFlip(document.getElementById('book'), {
-                                width: 400, /* புத்தகத்தின் நிலையான அகலம் */
-                                height: 560, /* புத்தகத்தின் நிலையான உயரம் */
-                                size: 'fixed', /* THE FIX: புத்தகம் பிரம்மாண்டமாக விரியாமல் தடுக்கப்பட்டுள்ளது */
-                                showCover: true, 
-                                usePortrait: true,
-                                drawShadow: true, /* புத்தகத்தின் நடுவே 3D மடிப்பு நிழல் */
-                                maxShadowOpacity: 0.4,
-                                mobileScrollSupport: true
-                            });
-                            
-                            const pages = document.querySelectorAll('.page');
-                            pageFlip.loadFromHTML(pages);
-
-                            const flipSound = document.getElementById('flipSound');
-                            
-                            pageFlip.on('changeState', (e) => {
-                                if (e.data === 'flipping') {
-                                    if (flipSound && flipSound.readyState >= 2) {
-                                        flipSound.currentTime = 0;
-                                        let playPromise = flipSound.play();
-                                        if (playPromise !== undefined) {
-                                            playPromise.catch(error => { console.log("Audio prevented"); });
-                                        }
-                                    }
-                                }
-                            });
-
-                            pageFlip.on('flip', (e) => {
-                                document.getElementById('current-page').innerText = e.data + 1;
-                            });
-
-                            let currentZoom = 1;
-                            const wrapper = document.getElementById('book-wrapper');
-                            
-                            document.getElementById('btn-zoom-in').addEventListener('click', () => {
-                                if(currentZoom < 2.5) { currentZoom += 0.2; wrapper.style.transform = `scale(${currentZoom})`; }
-                            });
-                            
-                            document.getElementById('btn-zoom-out').addEventListener('click', () => {
-                                if(currentZoom > 0.5) { currentZoom -= 0.2; wrapper.style.transform = `scale(${currentZoom})`; }
-                            });
-
-                            document.getElementById('btn-goto').addEventListener('click', () => {
-                                let target = parseInt(document.getElementById('goto-input').value);
-                                if(target >= 1 && target <= 24) {
-                                    pageFlip.flip(target - 1);
-                                }
-                            });
-                        } else {
-                            console.warn("ப்ளிப் புக் அனிமேஷன் வேலை செய்ய இன்டர்நெட் தேவை!");
-                        }
-                    } catch(err) {
-                        console.error("புத்தகம் லோட் ஆவதில் பிழை: ", err);
-                    }
-                };
-            </script>
-        </body>
-        </html>
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thalir - September 2026 Issue - Vaalu Pathippagam</title>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+    <style>
+        body {
+            background-color: #F4F1EA; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            user-select: none; 
+            -webkit-user-select: none;
+        }
         
+        /* புத்தகத்தின் கன்டெய்னர் - நடுவில் கச்சிதமாக நிற்க */
+        #book-wrapper {
+            width: 100vw;
+            height: calc(100vh - 100px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        #book {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .page {
+            background-color: #fff;
+            border: solid 1px #e3e3e3;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .page .bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill; 
+            display: block;
+            pointer-events: none;
+        }
+
+        .controls {
+            height: 50px;
+            background: #333;
+            padding: 5px 20px;
+            border-radius: 30px;
+            color: white;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 100;
+            margin-bottom: 20px;
+        }
+        .controls button {
+            background: #FFD700; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; color: black;
+        }
+        .controls input {
+            width: 50px; text-align: center; border-radius: 5px; border: none; padding: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">  
+    
+    <audio id="flipSound" src="flip.mp3"></audio>
+    
+    <div id="book-wrapper">
+        <div class="flip-book" id="book">
+            <div class="page"><img src="page_1.jpg" class="bg-img" alt="பக்கம் 1"></div>
+            <div class="page"><img src="page_2.jpg" class="bg-img" alt="பக்கம் 2"></div>
+            <div class="page"><img src="page_3.jpg" class="bg-img" alt="பக்கம் 3"></div>
+            <div class="page"><img src="page_4.jpg" class="bg-img" alt="பக்கம் 4"></div>
+            <div class="page"><img src="page_5.jpg" class="bg-img" alt="பக்கம் 5"></div>
+            <div class="page"><img src="page_6.jpg" class="bg-img" alt="பக்கம் 6"></div>
+            <div class="page"><img src="page_7.jpg" class="bg-img" alt="பக்கம் 7"></div>
+            <div class="page"><img src="page_8.jpg" class="bg-img" alt="பக்கம் 8"></div>
+            <div class="page"><img src="page_9.jpg" class="bg-img" alt="பக்கம் 9"></div>
+            <div class="page"><img src="page_10.jpg" class="bg-img" alt="பக்கம் 10"></div>
+            <div class="page"><img src="page_11.jpg" class="bg-img" alt="பக்கம் 11"></div>
+            <div class="page"><img src="page_12.jpg" class="bg-img" alt="பக்கம் 12"></div>
+            <div class="page"><img src="page_13.jpg" class="bg-img" alt="பக்கம் 13"></div>
+            <div class="page"><img src="page_14.jpg" class="bg-img" alt="பக்கம் 14"></div>
+            <div class="page"><ins class="bg-img" src="page_15.jpg"></ins><img src="page_15.jpg" class="bg-img" alt="பக்கம் 15"></div>
+            <div class="page"><img src="page_16.jpg" class="bg-img" alt="பக்கம் 16"></div>
+            <div class="page"><img src="page_17.jpg" class="bg-img" alt="பக்கம் 17"></div>
+            <div class="page"><img src="page_18.jpg" class="bg-img" alt="பக்கம் 18"></div>
+            <div class="page"><img src="page_19.jpg" class="bg-img" alt="பக்கம் 19"></div>
+            <div class="page"><img src="page_20.jpg" class="bg-img" alt="பக்கம் 20"></div>
+            <div class="page"><img src="page_21.jpg" class="bg-img" alt="பக்கம் 21"></div>
+            <div class="page"><img src="page_22.jpg" class="bg-img" alt="பக்கம் 22"></div>
+            <div class="page"><img src="page_23.jpg" class="bg-img" alt="பக்கம் 23"></div>
+            <div class="page"><img src="page_24.jpg" class="bg-img" alt="பக்கம் 24"></div>
+        </div>
+    </div>
+
+    <div class="controls" id="controls">
+        <button id="btn-zoom-out">- ஜூம் குறை</button>
+        <button id="btn-zoom-in">+ ஜூம் ஏற்று</button>
+        <span>பக்கம்: <span id="current-page">1</span> / <span id="total-pages">24</span></span>
+        <input type="number" id="goto-input" min="1" max="24">
+        <button id="btn-goto">செல்</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            try {
+                if (typeof St !== 'undefined') {
+                    const pageFlip = new St.PageFlip(document.getElementById('book'), {
+                        width: 400,
+                        height: 560,
+                        size: 'fixed',
+                        showCover: true, 
+                        usePortrait: true,
+                        drawShadow: true,
+                        maxShadowOpacity: 0.4,
+                        mobileScrollSupport: true
+                    });
+                    
+                    const pages = document.querySelectorAll('.page');
+                    pageFlip.loadFromHTML(pages);
+
+                    const flipSound = document.getElementById('flipSound');
+                    
+                    pageFlip.on('changeState', (e) => {
+                        if (e.data === 'flipping') {
+                            if (flipSound && flipSound.readyState >= 2) {
+                                flipSound.currentTime = 0;
+                                let playPromise = flipSound.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(error => { console.log("Audio prevented"); });
+                                }
+                            }
+                        }
+                    });
+
+                    pageFlip.on('flip', (e) => {
+                        document.getElementById('current-page').innerText = e.data + 1;
+                    });
+
+                    let currentZoom = 1;
+                    const wrapper = document.getElementById('book-wrapper');
+                    
+                    document.getElementById('btn-zoom-in').addEventListener('click', () => {
+                        if(currentZoom < 2.5) { currentZoom += 0.2; wrapper.style.transform = `scale(${currentZoom})`; }
+                    });
+                    
+                    document.getElementById('btn-zoom-out').addEventListener('click', () => {
+                        if(currentZoom > 0.5) { currentZoom -= 0.2; wrapper.style.transform = `scale(${currentZoom})`; }
+                    });
+
+                    document.getElementById('btn-goto').addEventListener('click', () => {
+                        let target = parseInt(document.getElementById('goto-input').value);
+                        if(target >= 1 && target <= 24) {
+                            pageFlip.flip(target - 1);
+                        }
+                    });
+                } else {
+                    console.warn("ப்ளிப் புக் அனிமேஷன் வேலை செய்ய இன்டர்நெட் தேவை!");
+                }
+            } catch(err) {
+                console.error("புத்தகம் லோட் ஆவதில் பிழை: ", err);
+            }
+        };
+    </script>
+</body>
+</html>
